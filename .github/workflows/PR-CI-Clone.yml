@@ -31,8 +31,11 @@ jobs:
         echo "bos_client=bce-python-sdk-0.8.27/BosClient.py" >> $GITHUB_ENV
 
     - name: Push to BOS
+      env:
+        PR_ID: ${{ github.event.pull_request.number }}
+        COMMIT_ID: ${{ github.event.pull_request.head.sha }}
       run: |
-        python3  ${{ env.bos_client }} Paddle.tar.gz xly-devops/PR/Paddle/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}
+        python3  ${{ env.bos_client }} Paddle.tar.gz xly-devops/PR/Paddle/${PR_ID}/${COMMIT_ID}
 
     # - name: Upload Paddle artifact
     #   uses: actions/upload-artifact@v3
