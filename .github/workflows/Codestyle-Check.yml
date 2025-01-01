@@ -39,6 +39,7 @@ jobs:
           pip install pre-commit==2.17.0
           pre-commit install
           pip install cpplint==1.6.0
+          sudo apt-get update
           sudo apt-get install clang-format-13 -y
 
       - name: Check pre-commit
