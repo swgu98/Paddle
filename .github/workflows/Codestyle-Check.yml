@@ -33,9 +33,16 @@ jobs:
           python-version: '3.8'
           cache: 'pip'
 
-      - name: Check pre-commit
+      - name: Install dependencies
         run: |
           pip --disable-pip-version-check install --upgrade pip
+          pip install pre-commit==2.17.0
+          pre-commit install
+          pip install cpplint==1.6.0
+          sudo apt-get install clang-format-13 -y
+
+      - name: Check pre-commit
+        run: |
           set +e
           bash -x tools/codestyle/pre_commit.sh;EXCODE=$?
           echo "ipipe_log_param_EXCODE: $EXCODE"
