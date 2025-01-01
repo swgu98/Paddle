@@ -23,9 +23,21 @@ jobs:
         run: |
           git config --global user.name "PaddleCI"
           git config --global user.email "paddle_ci@example.com"
+          cd ..
+          du -sh
+          cd -
           git fetch origin pull/${PR_ID}/head
+          cd ..
+          du -sh
+          cd -
           git checkout -b test FETCH_HEAD
+          cd ..
+          du -sh
+          cd -
           git merge --no-edit ${BRANCH}
+          cd ..
+          du -sh
+          cd -
 
       - name: Setup python3.8
         uses: actions/setup-python@v5
