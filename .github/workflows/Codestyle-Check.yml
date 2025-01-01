@@ -39,8 +39,12 @@ jobs:
           pip install pre-commit==2.17.0
           pre-commit install
           pip install cpplint==1.6.0
+          sudo apt-get install -y wget lsb-release software-properties-common
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo add-apt-repository "deb http://apt.llvm.org/$(lsb_release -sc)/ llvm-toolchain-$(lsb_release -sc) main"
           sudo apt-get update
-          sudo apt-get install clang-format-13 -y
+          sudo apt-get install -y clang-format-13
+
 
       - name: Check pre-commit
         run: |
