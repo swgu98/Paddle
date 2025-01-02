@@ -22,7 +22,7 @@ jobs:
         run: |
           for run in $(echo "${{ steps.list_failed.outputs.failed_runs }}" | jq -r '.[] | @base64'); do
             _jq() {
-              echo ${run} | base64 --decode | jq -r ${1}
+              echo ${run}  | base64 --decode | jq -r ${1}
             }
             run_id=$(_jq '.id')
             echo "Re-running workflow with ID: $run_id"
