@@ -2,7 +2,7 @@ name: Codestyle-Check
 
 on:
   pull_request:
-    branches: [ test-rerun ]
+    branches: [ develop ]
 
 jobs:
   pre-commit:
