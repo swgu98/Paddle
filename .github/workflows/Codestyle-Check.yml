@@ -2,7 +2,7 @@ name: Codestyle-Check
 
 on:
   pull_request:
-    branches: [ "develop" ]
+    branches: [ test-rerun ]
 
 jobs:
   pre-commit:
@@ -21,6 +21,7 @@ jobs:
 
       - name: Merge pr
         run: |
+          exit 1
           git config --global user.name "PaddleCI"
           git config --global user.email "paddle_ci@example.com"
           git fetch origin pull/${PR_ID}/head
