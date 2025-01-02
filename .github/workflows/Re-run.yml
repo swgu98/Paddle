@@ -16,7 +16,7 @@ jobs:
           echo "Failed runs: $failed_runs"
           echo "failed_runs=$failed_runs" >> $GITHUB_ENV
 
-      - name: Re  run failed workflows
+      - name: Re run failed workflows
         run: |
           for run in $(echo "${{ env.failed_runs }}" | jq -r '.[] | @base64'); do
             _jq() {
