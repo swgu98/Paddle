@@ -13,20 +13,16 @@ jobs:
         id: list_failed
         run: |
           pr_number=${{ github.event.issue.number }}
-          failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure&branch=${{ github.head_ref }}" | \
-            jq --arg pr_number "$pr_number" '.workflow_runs | map(select(.pull_requests[].number == ($pr_number | tonumber))) | map({id: .id, name: .name, created_at: .created_at}) | sort_by(.created_at) | reverse | unique_by(.name)')
-          echo "Failed runs: $failed_runs"
-          printf "failed_runs=%s\n" "$failed_runs" >> $GITHUB_ENV
+            jq --arg pr_number "$pr_number" -r '.workflow_runs | map(select(.pull_requests[].number == ($pr_number | tonumber))) | map({id: .id, name: .name, created_at: .created_at}) | sort_by(.created_at) | reverse | unique_by(.name) | .[].id' > failed_run_ids.txt
+          echo "Failed run IDs:"
+          cat failed_run_ids.txt
 
       - name: Re run failed workflows
         run: |
-          for run in $(echo "${{ env.failed_runs }}" | jq -r '.[] | @base64'); do
-            _jq() {
-              echo ${run} | base64 --decode | jq -r ${1}
-            }
-            run_id=$(_jq '.id')
+          while IFS= read -r run_id; do
             echo "Re-running workflow with ID: $run_id"
             curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               "https://api.github.com/repos/${{ github.repository }}/actions/runs/$run_id/rerun"
-          done
+          done < failed_run_ids.txt
