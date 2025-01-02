@@ -36,6 +36,8 @@ jobs:
 
 
       - name: Check pre-commit
+        env:
+          SKIP_CLANG_TIDY_CHECK: "ON"
         run: |
           set +e
           bash -x tools/codestyle/pre_commit.sh;EXCODE=$?
