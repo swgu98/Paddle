@@ -9,13 +9,16 @@ jobs:
     if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/re-run') }}
     runs-on: ubuntu-latest
     steps:
-      - name: List failed workflows
-        id: list_failed
+      - name: aa
         run: |
-          echo 1
-          failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure" | jq '.workflow_runs | map({id: .id, name: .name})')
-          echo "Failed runs: $failed_runs"
-          echo "::set-output name=failed_runs::$failed_runs"
+          echo 2
+      # - name: List failed workflows
+      #   id: list_failed
+      #   run: |
+      #     echo 1
+      #     failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure" | jq '.workflow_runs | map({id: .id, name: .name})')
+      #     echo "Failed runs: $failed_runs"
+      #     echo "::set-output name=failed_runs::$failed_runs"
 
       # - name: Re run failed workflows
       #   run: |
