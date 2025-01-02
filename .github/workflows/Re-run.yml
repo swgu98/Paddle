@@ -6,28 +6,24 @@ on:
 
 jobs:
   re-run:
-    # if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/re-run') }}
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/re-run') }}
     runs-on: ubuntu-latest
     steps:
-      - name: aa
+      - name: List failed workflows
+        id: list_failed
         run: |
-          echo 234
-      # - name: List failed workflows
-      #   id: list_failed
-      #   run: |
-      #     echo 1
-      #     failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure" | jq '.workflow_runs | map({id: .id, name: .name})')
-      #     echo "Failed runs: $failed_runs"
-      #     echo "::set-output name=failed_runs::$failed_runs"
+          failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure" | jq '.workflow_runs | map({id: .id, name: .name})')
+          echo "Failed runs: $failed_runs"
+          echo "::set-output name=failed_runs::$failed_runs"
 
-      # - name: Re run failed workflows
-      #   run: |
-      #     for run in $(echo "${{ steps.list_failed.outputs.failed_runs }}" | jq -r '.[] | @base64'); do
-      #       _jq() {
-      #         echo ${run}  | base64 --decode | jq -r ${1}
-      #       }
-      #       run_id=$(_jq '.id')
-      #       echo "Re-running workflow with ID: $run_id"
-      #       curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-      #         "https://api.github.com/repos/${{ github.repository }}/actions/runs/$run_id/rerun"
-      #     done
+      - name: Re run failed workflows
+        run: |
+          for run in $(echo "${{ steps.list_failed.outputs.failed_runs }}" | jq -r '.[] | @base64'); do
+            _jq() {
+              echo ${run}  | base64 --decode | jq -r ${1}
+            }
+            run_id=$(_jq '.id')
+            echo "Re-running workflow with ID: $run_id"
+            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/runs/$run_id/rerun"
+          done
