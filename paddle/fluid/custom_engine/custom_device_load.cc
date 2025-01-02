@@ -23,7 +23,7 @@ typedef bool (*RegisterDevicePluginFn)(CustomRuntimeParams* runtime_params);
 typedef bool (*RegisterDevicePluginEngineFn)(CustomEngineParams* engine_params);
 
 void LoadCustomLib(const std::string& dso_lib_path, void* dso_handle) {
-  CustomRuntimeParams runtime_params;
+   CustomRuntimeParams runtime_params;
   std::memset(&runtime_params, 0, sizeof(CustomRuntimeParams));
   runtime_params.size = sizeof(CustomRuntimeParams);
   auto device_interface = std::make_unique<C_DeviceInterface>();
