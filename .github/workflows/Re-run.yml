@@ -9,7 +9,7 @@ jobs:
     if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/re-run') }}
     runs-on: ubuntu-latest
     steps:
-      - name: List  failed workflows
+      - name: List failed workflows
         id: list_failed
         run: |
           echo 1
