@@ -2,7 +2,7 @@ name: Re-run
 
 on:
   issue_comment:
-    - types: [created]
+    types: [created]
 
 jobs:
   re-run:
@@ -12,6 +12,7 @@ jobs:
       - name: List failed workflows
         id: list_failed
         run: |
+          echo 1
           failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure" \
             | jq '.workflow_runs | map({id: .id, name: .name})')
