@@ -14,13 +14,13 @@ jobs:
         run: |
           failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure" | jq '.workflow_runs | map({id: .id, name: .name})')
           echo "Failed runs: $failed_runs"
-          echo "::set-output name=failed_runs::$failed_runs"
+          echo "failed_runs=$failed_runs" >> $GITHUB_ENV
 
       - name: Re  run failed workflows
         run: |
-          for run in $(echo "${{ steps.list_failed.outputs.failed_runs }}" | jq -r '.[] | @base64'); do
+          for run in $(echo "${{ env.failed_runs }}" | jq -r '.[] | @base64'); do
             _jq() {
-              echo ${run}  | base64 --decode | jq -r ${1}
+              echo ${run} | base64 --decode | jq -r ${1}
             }
             run_id=$(_jq '.id')
             echo "Re-running workflow with ID: $run_id"
