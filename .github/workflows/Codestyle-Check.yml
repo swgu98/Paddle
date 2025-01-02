@@ -24,25 +24,19 @@ jobs:
           git fetch origin pull/${PR_ID}/merge
           git checkout -b test FETCH_HEAD
 
-      - name: Setup python3.8
+      - name: Setup python3.12
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: '3.12'
           cache: 'pip'
 
       - name: Install dependencies
         run: |
-          pip --disable-pip-version-check install --upgrade pip
-          pip install pre-commit==2.17.0
-          pre-commit install
-          pip install cpplint==1.6.0
-          sudo apt-get update
-          sudo apt-get install -y clang-format
+          pip install pre-commit==2.17.0 cpplint==1.6.0 clang-format==13.0.0
 
 
       - name: Check pre-commit
         run: |
           set +e
           bash -x tools/codestyle/pre_commit.sh;EXCODE=$?
-          echo "ipipe_log_param_EXCODE: $EXCODE"
           exit $EXCODE
