@@ -12,7 +12,10 @@ jobs:
       - name: List failed workflows
         id: list_failed
         run: |
-          failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure" | jq '.workflow_runs | map({id: .id, name: .name})')
+          pr_number=${{ github.event.issue.number }}
+          failed_runs=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=failure&branch=${{ github.head_ref }}" | \
+            jq --arg pr_number "$pr_number" '.workflow_runs | map(select(.pull_requests[].number == ($pr_number | tonumber))) | map({id: .id, name: .name, created_at: .created_at}) | sort_by(.created_at) | reverse | unique_by(.name)')
           echo "Failed runs: $failed_runs"
           echo "failed_runs=$failed_runs" >> $GITHUB_ENV
 
