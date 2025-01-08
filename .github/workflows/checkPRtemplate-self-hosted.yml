@@ -7,9 +7,7 @@ on:
 
 jobs:
   check:
-    runs-on:
-      group: Default
-      labels: [self-hosted, test]
+    runs-on: [self-hosted, test]
     permissions:
       contents: read
     steps:
