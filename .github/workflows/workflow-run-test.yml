@@ -3,10 +3,6 @@ name: workflow-run-test
 on:
   pull_request:
     branches: [ "develop" ]
-  workflow_run:
-    workflows: [Codestyle-Check]
-    types:
-      - completed
 
 jobs:
   test:
