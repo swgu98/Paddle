@@ -2,7 +2,7 @@ name: workflow-run-test
 
 on:
   workflow_run:
-    workflows: [Check PR Template]
+    workflows: [Codestyle-Check]
     types:
       - completed
 
