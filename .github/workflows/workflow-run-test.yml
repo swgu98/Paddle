@@ -4,7 +4,6 @@ on:
   workflow_run:
     workflows: [Codestyle-Check]
     types: [completed]
-    branches: [develop]
 
 jobs:
   test:
