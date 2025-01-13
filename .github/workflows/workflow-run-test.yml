@@ -8,6 +8,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-      echo "hh"
-      echo "hh"
+    - name: hh
+      run: |
+        echo "hh"
