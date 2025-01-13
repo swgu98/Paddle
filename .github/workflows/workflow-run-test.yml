@@ -1,0 +1,14 @@
+name: workflow-run-test
+
+on:
+  workflow_run:
+    workflows: [Check PR Template]
+    types:
+      - completed
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        echo "hh"
