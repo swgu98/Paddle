@@ -1,6 +1,7 @@
 name: workflow-run-test
 
 on:
+  pull_request:
   workflow_run:
     workflows: [Codestyle-Check]
     types: [completed]
