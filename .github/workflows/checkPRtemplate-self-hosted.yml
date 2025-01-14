@@ -22,4 +22,5 @@ jobs:
         AK: ${{ secrets.AK }}
         SK: ${{ secrets.SK }}
       run: |
+        pwd
         echo "hh"
