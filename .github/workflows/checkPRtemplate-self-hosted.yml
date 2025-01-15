@@ -21,6 +21,7 @@ jobs:
       env:
         AK: ${{ secrets.AK }}
         SK: ${{ secrets.SK }}
+        gh_token: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pwd
         echo "hh"
