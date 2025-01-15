@@ -24,4 +24,5 @@ jobs:
         gh_token: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pwd
+        echo $gh_token
         echo "hh"
