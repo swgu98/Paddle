@@ -55,3 +55,12 @@ jobs:
         tar -zcf Paddle-action.tar.gz Paddle
         python -m pip install bce-python-sdk==0.8.74
         python bos_upload.py Paddle-action.tar.gz xly-devops/PR/Paddle/${PR_ID}/${COMMIT_ID}
+
+  Scheduling:
+    # needs: Clone
+    if: github.repository_owner == 'PaddlePaddle'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Scheduling other workflow
+      run: |
+        gh Scheduling -f PR_ID=${PR_ID} COMMIT_ID=${COMMIT_ID}

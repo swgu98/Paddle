@@ -1,0 +1,19 @@
+name: Scheduling
+
+on:
+  workflow_dispatch:
+    inputs:
+      PR_ID:
+        description: 'PR number'
+        required: true
+        type: string
+      COMMIT_ID:
+        description: 'commit number'
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "test"
