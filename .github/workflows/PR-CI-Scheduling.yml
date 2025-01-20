@@ -14,6 +14,8 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "test"
+    uses: test-call
+    with:
+      PR_ID: ${PR_ID}
+      COMMIT_ID: ${COMMIT_ID}
+    secrets: inherit
