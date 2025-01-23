@@ -1,4 +1,4 @@
-name: Clone
+name: Clone-linux
 
 on:
   pull_request:
