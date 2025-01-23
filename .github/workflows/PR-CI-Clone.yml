@@ -49,11 +49,11 @@ jobs:
         python -m pip install bce-python-sdk==0.8.74
         python ${bos_file} Paddle.tar.gz paddle-github-action/PR/Paddle/${PR_ID}/${COMMIT_ID}
 
-  Scheduling:
-    runs-on:
-      group: HK-Clone
-    needs: Clone
-    uses: ./.github/workflows/Scheduling.yml
-    with:
-      PR_ID: ${PR_ID}
-      COMMIT_ID: ${COMMIT_ID}
+  # Scheduling:
+  #   runs-on:
+  #     group: HK-Clone
+  #   needs: Clone
+  #   uses: ./.github/workflows/Scheduling.yml
+  #   with:
+  #     PR_ID: ${PR_ID}
+  #     COMMIT_ID: ${COMMIT_ID}
