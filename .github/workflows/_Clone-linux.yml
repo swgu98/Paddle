@@ -1,15 +1,23 @@
 name: Clone-linux
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  workflow_call:
+    inputs:
+      PR_ID:
+        description: 'PR number'
+        required: true
+        type: string
+      COMMIT_ID:
+        description: 'commit number'
+        required: true
+        type: string
+
+env:
+  PR_ID: ${{ inputs.PR_ID }}
+  COMMIT_ID: ${{ inputs.COMMIT_ID }}
 
 permissions:
   contents: read
-
-env:
-  PR_ID: ${{ github.event.pull_request.number }}
-  COMMIT_ID: ${{ github.event.pull_request.head.sha }}
 
 jobs:
   Clone:
@@ -48,12 +56,3 @@ jobs:
         tar -zcf Paddle.tar.gz Paddle
         python -m pip install bce-python-sdk==0.8.74
         python ${bos_file} Paddle.tar.gz paddle-github-action/PR/Paddle/${PR_ID}/${COMMIT_ID}
-
-  # Scheduling:
-  #   runs-on:
-  #     group: HK-Clone
-  #   needs: Clone
-  #   uses: ./.github/workflows/Scheduling.yml
-  #   with:
-  #     PR_ID: ${PR_ID}
-  #     COMMIT_ID: ${COMMIT_ID}

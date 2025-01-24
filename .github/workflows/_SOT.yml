@@ -13,6 +13,8 @@ on:
         type: string
 
 env:
+  PR_ID: ${{ github.event.pull_request.number }}
+  COMMIT_ID: ${{ github.event.pull_request.head.sha }}
   dockerfile: Dockerfile.cuda9_cudnn7_gcc48_py35_centos6
   docker-image: cuda9_cudnn7_gcc48_py35_centos6
   FLAGS_fraction_of_gpu_memory_to_use: 0.15
