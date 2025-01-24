@@ -9,13 +9,6 @@ env:
   COMMIT_ID: ${{ github.event.pull_request.head.sha }}
 
 jobs:
-  n:
-    runs-on: ubuntu-latest
-    steps:
-    - name: ss
-      run: |
-        echo "hh"
-
   Clone:
     uses: ./.github/workflows/_Clone-linux.yml
     with:
