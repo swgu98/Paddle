@@ -15,11 +15,12 @@ jobs:
     - name: ss
       run: |
         echo "hh"
-  # Clone:
-  #   uses: ./.github/workflows/Clone-linux.yml
-  #   with:
-  #     PR_ID: ${PR_ID}
-  #     COMMIT_ID: ${COMMIT_ID}
+
+  Clone:
+    uses: ./.github/workflows/Clone-linux.yml
+    with:
+      PR_ID: ${PR_ID}
+      COMMIT_ID: ${COMMIT_ID}
 
   # SOT:
   #   uses: ./.github/workflows/SOT.yml
