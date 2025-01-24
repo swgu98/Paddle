@@ -9,11 +9,16 @@ env:
   COMMIT_ID: ${{ github.event.pull_request.head.sha }}
 
 jobs:
-  Clone:
-    uses: ./.github/workflows/Clone-linux.yml
-    with:
-      PR_ID: ${PR_ID}
-      COMMIT_ID: ${COMMIT_ID}
+  n:
+    steps:
+    - name: ss
+      run: |
+        echo "hh"
+  # Clone:
+  #   uses: ./.github/workflows/Clone-linux.yml
+  #   with:
+  #     PR_ID: ${PR_ID}
+  #     COMMIT_ID: ${COMMIT_ID}
 
   # SOT:
   #   uses: ./.github/workflows/SOT.yml
